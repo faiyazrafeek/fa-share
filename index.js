@@ -34,9 +34,9 @@ function getData() {
         let data =  Object.values(snapshot.val());
         data.forEach(data => {
             $('#view_area').prepend(`
-            <div class="card" onclick="copyToClipboard('msg')">
+            <div class="card" >
                 <div class="card-body">               
-                    <p name="msg">${data.message}</p>           
+                    <p onclick="copyToClipboard(this)">${data.message}</p>           
                 </div>
             </div></br>
             `)
