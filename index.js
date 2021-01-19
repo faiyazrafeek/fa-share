@@ -29,15 +29,23 @@ function writeData(){
 }
 
 function getData() {
+   
     usersRef.on('value', function(snapshot) {
         document.getElementById("view_area").innerHTML= "";
         let data =  Object.values(snapshot.val());
         let id = snapshot.key;
+        
         data.forEach(data => { 
+            let pText = `<p class="h6 d-inline" id="${data.id}">${data.message.trim()}</p>`;
+            let aText = `<a class="h6 d-inline" href="${data.message.trim()}" id="${data.id}">${data.message.trim()}</a>`;
             $('#view_area').prepend(`
             <div class="card" onclick="copyToClipboard('#${data.id}')">
-                <div class="card-body ">  
-                    <p class="h6 d-inline" id="${data.id}">${data.message.trim()}</p>   
+                <div class="card-body "> 
+                    ${
+                        linkCheck(data.message) == true ? pText : aText
+                      
+                    } 
+                      
                     <button type="button" class="btn btn-danger float-end d-inline mt-3" onclick="deleteMsg('${data.id}')" aria-label="Close"><i class="fas fa-trash"></i> </button>
                 </div>
             </div></br>
@@ -75,3 +83,9 @@ function create_UUID (){
     });
     return uuid;
 }
+
+
+function linkCheck(str) {
+    var patt = /^(http|https|www|)/g;
+    return str.match(patt) == "" ?  true : false;
+  }
