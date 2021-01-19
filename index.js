@@ -51,6 +51,7 @@ function getData() {
 function deleteAll(){  
     let refId = database.ref('/');
     refId.remove()
+    document.getElementById("view_area").innerHTML= "";
 }
 
 function copyToClipboard(element) {
