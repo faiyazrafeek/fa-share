@@ -1,15 +1,18 @@
+
+
 const msg = document.getElementById("message");
 const submit = document.getElementById("btn-add");
 
 const database = firebase.database();
-const usersRef = database.ref('/');
+const usersRef = database.ref('/'+ create_UUID());
+
 
 function writeData(){
-    let uid = create_UUID();
     if (msg.value != ""){
-        usersRef.child(uid).set({
+        const autoId = usersRef.push().key
+        usersRef.push().set({
         message: msg.value,
-        id : uid
+        id : autoId
         });
 
         Swal.fire(
@@ -33,22 +36,18 @@ function getData() {
         document.getElementById("view_area").innerHTML= "";
         let data =  Object.values(snapshot.val());
         let id = snapshot.key;
-        data.forEach(data => { 
+        data.forEach(data => {
+            console.log(data.id)
             $('#view_area').prepend(`
             <div class="card" onclick="copyToClipboard('#${data.id}')">
-                <div class="card-body ">  
-                    <p class="h6 d-inline" id="${data.id}">${data.message.trim()}</p>   
-                    <button type="button" class="btn btn-danger float-end d-inline mt-3" onclick="deleteMsg('${data.id}')" aria-label="Close"><i class="fas fa-trash"></i> </button>
+                <div class="card-body">  
+                    <p id="${data.id}">${data.message.trim()}</p>   
+                    <button class="btn btn-danger">x</button>
                 </div>
             </div></br>
             `)
         });   
     });
-}
-
-function deleteMsg(id){  
-    let refId = database.ref('/'+ id);
-    refId.remove()
 }
 
 function deleteAll(){  
@@ -70,7 +69,7 @@ function create_UUID (){
     var dt = new Date().getTime();
     var uuid = 'xxyxxy'.replace(/[xy]/g, function(c) {
         var r = (dt + Math.random()*10)%10 | 0;
-        dt = Math.floor(dt/10);
+        dt = Math.floor(dt/16);
         return (c=='x' ? r :(r&0x3|0x8)).toString(16);
     });
     return uuid;

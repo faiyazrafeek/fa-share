@@ -61,12 +61,15 @@
                     </div>
 
                     <button type="button" onclick="writeData()" class="btn btn-primary" id="btn-add"><i class="fas fa-plus"></i> Add</button>
+                    <button type="button" onclick="clearText()" class="btn btn-secondary" id="btn-clear"><i class="fas fa-backspace"></i> Clear</button>
                 </form>
+
+
                 
             </div>
             
             <div class="col-md-6" >
-                <button class="btn btn-primary mb-4" onclick="deleteAll()"><i class="fas fa-trash-alt"></i> Clear Messages</button>
+                            <button class="btn btn-warning mb-4" onclick="deleteAll()"><i class="fas fa-trash-alt"></i> Clear Messages</button>
                 <div id="view_area">
 
                 </div>               
@@ -115,6 +118,9 @@
         $(document).ready(function(){
             refresh();
         })
+        function clearText() {
+        document.getElementById("message").value = "";
+        }
     </script>
 
   </body>
