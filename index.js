@@ -6,12 +6,12 @@ const database = firebase.database();
 const usersRef = database.ref('/');
 
 function writeData(){
-    $('#view_area').html = '';
     if (msg.value != ""){
         const autoId = usersRef.push().key
         usersRef.push().set({
         message: msg.value
         });
+        document.getElementById("view_area").innerHTML= "";
         Swal.fire(
             'Added',
             'Your message stored!',
@@ -30,10 +30,11 @@ function writeData(){
 
 function getData() {
     usersRef.on('value', function(snapshot) {
+        document.getElementById("view_area").innerHTML= "";
         let data =  Object.values(snapshot.val());
         data.forEach(data => {
             $('#view_area').prepend(`
-            <div class="card">
+            <div class="card" onclick="copyToClipboard(this)">
                 <div class="card-body">               
                     <p>${data.message}</p>           
                 </div>
@@ -41,6 +42,14 @@ function getData() {
             `)
         });   
     });
+}
+
+function copyToClipboard(element) {
+    var $temp = $("<input>");
+    $("body").append($temp);
+    $temp.val($(element).text()).select();
+    document.execCommand("copy");
+    $temp.remove();
 }
 
 
