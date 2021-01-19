@@ -16,7 +16,7 @@
 
     <title>FA Share</title>
   </head>
-  <body onload="getData()">
+  <body onload="refresh()">
 
     <nav class="navbar navbar-dark  mb-4" style="background-color: rgb(36, 69, 214);">
 
@@ -85,7 +85,10 @@
     <script src="index.js"></script>
 
     <script>
-        
+        refresh = () =>{
+            $('#view-area').html = '';
+            getData();
+        }
     </script>
 
   </body>

@@ -6,6 +6,7 @@ const database = firebase.database();
 const usersRef = database.ref('/');
 
 function writeData(){
+    $('#view_area').html = '';
     if (msg.value != ""){
         const autoId = usersRef.push().key
         usersRef.push().set({
@@ -24,13 +25,14 @@ function writeData(){
             'error'
           )
     }
+    
 }
 
 function getData() {
     usersRef.on('value', function(snapshot) {
         let data =  Object.values(snapshot.val());
         data.forEach(data => {
-            $('#view_area').append(`
+            $('#view_area').prepend(`
             <div class="card">
                 <div class="card-body">               
                     <p>${data.message}</p>           
